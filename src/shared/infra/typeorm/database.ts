@@ -1,8 +1,7 @@
+import { User } from "@modules/accounts/infra/typeorm/entities/User";
+import { Category } from "@modules/cars/infra/typeorm/entities/Category";
+import { Specification } from "@modules/cars/infra/typeorm/entities/Specification";
 import { DataSourceOptions } from "typeorm";
-
-import { User } from "../modules/accounts/entities/User";
-import { Category } from "../modules/cars/entities/Category";
-import { Specification } from "../modules/cars/entities/Specification";
 
 const databaseOptions: DataSourceOptions = {
     type: "postgres",
@@ -17,7 +16,7 @@ const databaseOptions: DataSourceOptions = {
     entities: [Category, Specification, User],
     synchronize: true,
     logging: false,
-    migrations: ["src/database/migrations/*{.ts,.js}"],
+    migrations: ["src/shared/infra/typeorm/migrations/*{.ts,.js}"],
     migrationsTableName: "custom_migration_table",
 };
 export { databaseOptions };

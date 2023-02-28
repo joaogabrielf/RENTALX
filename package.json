@@ -4,11 +4,13 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev": "ts-node-dev -r tsconfig-paths/register --poll --transpile-only --inspect --ignore-watch node_modules --respawn src/server.ts",
-    "typeorm": "typeorm-ts-node-esm -r tsconfig-paths/register",
-    "migration:generate": "typeorm-ts-node-esm migration:generate -d ./src/database/data-source.ts",
-    "migration:up": "typeorm-ts-node-esm migration:run -d ./src/database/data-source.ts",
-    "migration:down": "typeorm-ts-node-esm migration:revert -d ./src/database/data-source.ts",
+    "dev": "ts-node-dev -r tsconfig-paths/register --poll --transpile-only --inspect --ignore-watch node_modules --respawn src/shared/infra/http/server.ts",
+    "typeorm": "ts-node-dev -r tsconfig-paths/register ./node_modules/typeorm/cli",
+    "data-source": "./src/shared/infra/typeorm/data-source.ts",
+    "migration:create": "cd src/shared/infra/typeorm/migrations/ && typeorm migration:create",
+    "migration:generate": "cd src/shared/infra/typeorm/migrations/ && typeorm -d data-source -- migration:generate",
+    "migration:up": "typeorm -d data-source -- migration:run",
+    "migration:down": "typeorm -d data-source -- migration:revert",
     "test": "jest"
   },
   "devDependencies": {
