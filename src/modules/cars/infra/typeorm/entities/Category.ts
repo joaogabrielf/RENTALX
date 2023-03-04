@@ -4,7 +4,6 @@ import {
     PrimaryGeneratedColumn,
     CreateDateColumn,
 } from "typeorm";
-// import { v4 as uuidv4 } from "uuid";
 
 @Entity("categories")
 export class Category {
@@ -19,8 +18,4 @@ export class Category {
 
     @CreateDateColumn()
     created_at: Date;
-
-    // constructor() {
-    //     this.id = this.id ?? uuidv4();
-    // }
 }

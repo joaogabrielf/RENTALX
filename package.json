@@ -4,14 +4,15 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev": "ts-node-dev -r tsconfig-paths/register --poll --transpile-only --inspect --ignore-watch node_modules --respawn src/shared/infra/http/server.ts",
     "typeorm": "ts-node-dev -r tsconfig-paths/register ./node_modules/typeorm/cli",
-    "data-source": "./src/shared/infra/typeorm/data-source.ts",
-    "migration:create": "cd src/shared/infra/typeorm/migrations/ && typeorm migration:create",
-    "migration:generate": "cd src/shared/infra/typeorm/migrations/ && typeorm -d data-source -- migration:generate",
-    "migration:up": "typeorm -d data-source -- migration:run",
-    "migration:down": "typeorm -d data-source -- migration:revert",
-    "test": "jest"
+    "dev": "ts-node-dev -r tsconfig-paths/register --poll --transpile-only --inspect --ignore-watch node_modules --respawn src/shared/infra/http/server.ts",
+    "migration:create": "cross-var yarn typeorm migration:create src/shared/infra/typeorm/migrations/%name%",
+    "migration:generate": "typeorm -d data-source -- migration:generate",
+    "migration:run": "cross-var yarn typeorm -d ./src/shared/infra/typeorm/data-source.ts migration:run",
+    "migration:down": "typeorm -d ./src/shared/infra/typeorm/data-source.ts -- migration:revert",
+    "test": "jest",
+    "seed:admin": "ts-node-dev ./src/shared/infra/typeorm/seed/admin",
+    "win-script": "cross-var yarn echo $datasource datasource Hello $npm_package_name %name% typeorm datasource"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
@@ -39,6 +40,7 @@
   "dependencies": {
     "await-to-js": "^3.0.0",
     "bcryptjs": "^2.4.3",
+    "cross-var": "^1.1.0",
     "csv-parse": "^5.3.3",
     "express": "^4.18.2",
     "express-async-errors": "^3.1.1",

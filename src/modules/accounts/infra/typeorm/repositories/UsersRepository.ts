@@ -1,5 +1,5 @@
 import { IUsersRepository } from "@modules/accounts/repositories/IUsersRepository";
-import { ICreateUserDTO } from "@modules/dtos/ICreateUserDTO";
+import { ICreateUserDTO } from "@modules/accounts/dtos/ICreateUserDTO";
 import { Repository } from "typeorm";
 
 import { AppDataSource } from "@shared/infra/typeorm/data-source";
