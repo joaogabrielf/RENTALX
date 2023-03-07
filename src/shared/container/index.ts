@@ -7,10 +7,10 @@ import { container } from "tsyringe";
 // ICategoriesRepository
 container.registerSingleton("CategoriesRepository", CategoriesRepository);
 
-// ICategoriesRepository
+// ISpepcificationRepository
 container.registerSingleton("SpecificationRepository", SpecificationRepository);
 
-// ICategoriesRepository
+// IUsersRepository
 container.registerSingleton("UsersRepository", UsersRepository);
 
 // ICarsRepository

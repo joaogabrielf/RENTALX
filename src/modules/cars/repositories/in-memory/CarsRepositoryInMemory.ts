@@ -1,5 +1,5 @@
+import { ICarFilterListDTO } from "@modules/cars/dtos/ICarFilterListDTO";
 import { ICreateCarDTO } from "@modules/cars/dtos/ICreateCarDTO";
-import { IFilterListDTO } from "@modules/cars/dtos/IFilterListDTO";
 import { Car } from "@modules/cars/infra/typeorm/entities/Car";
 import { v4 as uuidv4 } from "uuid";
 
@@ -16,11 +16,13 @@ export class CarsRepositoryInMemory implements ICarsRepository {
         fine_amount,
         name,
         license_plate,
+        specifications,
+        id,
     }: ICreateCarDTO): Promise<Car> {
         const car = new Car();
 
         Object.assign(car, {
-            id: uuidv4(),
+            id: id ?? uuidv4(),
             brand,
             category_id,
             daily_rate,
@@ -29,6 +31,7 @@ export class CarsRepositoryInMemory implements ICarsRepository {
             fine_amount,
             name,
             license_plate,
+            specifications,
             created_at: new Date(),
         });
 
@@ -36,12 +39,12 @@ export class CarsRepositoryInMemory implements ICarsRepository {
         return car;
     }
 
-    async findByLicensePlate(license_plate: string): Promise<Car> {
-        return this.cars.find((car) => car.license_plate === license_plate);
-    }
+    // async findByLicensePlate(license_plate: string): Promise<Car> {
+    //     return this.cars.find((car) => car.license_plate === license_plate);
+    // }
 
     async find(
-        filterBy: IFilterListDTO,
+        filterBy: ICarFilterListDTO,
         orderBy = "name",
         onlyAvailable = true
     ): Promise<Car[]> {
@@ -55,7 +58,7 @@ export class CarsRepositoryInMemory implements ICarsRepository {
             return 0;
         };
 
-        const { brand, category_id, name } = filterBy;
+        const { id, brand, category_id, name, license_plate } = filterBy;
         const isEmpty = !Object.values(filterBy).some((x) => x !== undefined);
 
         return this.cars
@@ -65,6 +68,9 @@ export class CarsRepositoryInMemory implements ICarsRepository {
                       ((brand && car.brand === brand) ||
                           (category_id && car.category_id === category_id) ||
                           (name && car.name === name) ||
+                          (id && car.id === id) ||
+                          (license_plate &&
+                              car.license_plate === license_plate) ||
                           isEmpty)
                     : true
             )

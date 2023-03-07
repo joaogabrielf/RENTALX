@@ -1,8 +1,7 @@
-import {
-    ISpecificationRepository,
-    ICreateSpecificationDTO,
-} from "@modules/cars/repositories/ISpecificationRepository";
-import { Repository } from "typeorm";
+import { ICreateSpecificationDTO } from "@modules/cars/dtos/ICreateSpecificationDTO";
+import { ISpecificationFilterListDTO } from "@modules/cars/dtos/ISpecificationFilterListDTO";
+import { ISpecificationRepository } from "@modules/cars/repositories/ISpecificationRepository";
+import { In, Repository } from "typeorm";
 
 import { AppDataSource } from "@shared/infra/typeorm/data-source";
 
@@ -18,17 +17,24 @@ class SpecificationRepository implements ISpecificationRepository {
     async create({
         name,
         description,
-    }: ICreateSpecificationDTO): Promise<void> {
+    }: ICreateSpecificationDTO): Promise<Specification> {
         const specification = this.repository.create({
             description,
             name,
         });
 
         await this.repository.save(specification);
+
+        return specification;
     }
 
-    async findByName(name: string): Promise<Specification> {
-        const specification = this.repository.findOneBy({ name });
+    async find(
+        filterBy: ISpecificationFilterListDTO
+    ): Promise<Specification[]> {
+        const { ids, name } = filterBy;
+        const specification = await this.repository.findBy([
+            { id: In(ids), name },
+        ]);
 
         return specification;
     }

@@ -1,7 +1,7 @@
+import { ICarFilterListDTO } from "@modules/cars/dtos/ICarFilterListDTO";
 import { ICreateCarDTO } from "@modules/cars/dtos/ICreateCarDTO";
-import { IFilterListDTO } from "@modules/cars/dtos/IFilterListDTO";
 import { ICarsRepository } from "@modules/cars/repositories/ICarsRepository";
-import { Brackets, Repository } from "typeorm";
+import { Repository } from "typeorm";
 
 import { AppDataSource } from "@shared/infra/typeorm/data-source";
 
@@ -22,6 +22,8 @@ export class CarsRepository implements ICarsRepository {
         fine_amount,
         license_plate,
         name,
+        specifications,
+        id,
     }: ICreateCarDTO): Promise<Car> {
         const car = this.repository.create({
             brand,
@@ -31,6 +33,8 @@ export class CarsRepository implements ICarsRepository {
             fine_amount,
             license_plate,
             name,
+            specifications,
+            id,
         });
 
         await this.repository.save(car);
@@ -44,11 +48,11 @@ export class CarsRepository implements ICarsRepository {
     }
 
     async find(
-        filterBy: IFilterListDTO,
+        filterBy: ICarFilterListDTO,
         orderBy?: string,
         onlyAvailable = true
     ): Promise<Car[]> {
-        const { brand, category_id, name } = filterBy;
+        const { id, brand, category_id, name, license_plate } = filterBy;
         const carsQuery = this.repository
             .createQueryBuilder("c")
             .where("available= :available", { available: true });
@@ -56,6 +60,13 @@ export class CarsRepository implements ICarsRepository {
         if (onlyAvailable !== true) {
             carsQuery.orWhere("available= :available", { available: false });
         }
+
+        if (id) carsQuery.andWhere("id=:id", { id });
+
+        if (license_plate)
+            carsQuery.andWhere("license_plate=:license_plate", {
+                license_plate,
+            });
 
         if (brand) carsQuery.andWhere("brand=:brand", { brand });
 
