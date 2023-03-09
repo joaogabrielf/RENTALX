@@ -7,7 +7,6 @@ import multer from "multer";
 import { ensureAuthenticaded } from "../middlewares/ensureAuthenticaded";
 
 export const usersRoutes = Router();
-// usersRoutes.use(ensureAuthenticaded);
 
 const uploadAvatar = multer(uploadConfig.upload("./tmp/avatar"));
 

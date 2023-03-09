@@ -1,4 +1,4 @@
-import { SpecificationRepository } from "@modules/cars/infra/typeorm/repositories/SpecificationRepository";
+import { ISpecificationRepository } from "@modules/cars/repositories/ISpecificationRepository";
 import { inject, injectable } from "tsyringe";
 
 import { AppError } from "@shared/errors/AppError";
@@ -12,14 +12,14 @@ interface IRequest {
 class CreateSpecificationUseCase {
     constructor(
         @inject("SpecificationRepository")
-        private specificationRepository: SpecificationRepository
+        private specificationRepository: ISpecificationRepository
     ) {}
 
     async execute({ name, description }: IRequest): Promise<void> {
         const specificationAlreadyExists =
             await this.specificationRepository.find({ name });
 
-        if (specificationAlreadyExists) {
+        if (!specificationAlreadyExists?.length) {
             throw new AppError("Specification already exists");
         }
 

@@ -20,14 +20,6 @@ class CreateCategoryController {
         }
 
         return response.status(201).send();
-
-        // try {
-        //     await this.createCategoryUseCase.execute({ name, description });
-        //     return response.status(201).send();
-        // } catch (error) {
-        //     console.error(error.message);
-        //     return response.status(400).json({ error: error.message });
-        // }
     }
 }
 

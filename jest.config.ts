@@ -14,6 +14,14 @@ export default {
     moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, {
         prefix: "<rootDir>/src/",
     }),
+    transform: {
+        "^.+\\.(ts)$": "ts-jest",
+    },
+    // globals: {
+    //     "ts-jest": {
+    //         isolatedModules: true,
+    //     },
+    // },
     // All imported modules in your tests should be mocked automatically
 
     // automock: false,
