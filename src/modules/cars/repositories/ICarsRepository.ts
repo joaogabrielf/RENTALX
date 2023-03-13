@@ -6,7 +6,8 @@ export interface ICarsRepository {
     create(data: ICreateCarDTO): Promise<Car>;
     find(
         filterBy: ICarFilterListDTO,
-        orderBy?: string,
-        onlyAvailable?: boolean
+        onlyAvailable?: boolean,
+        orderBy?: string
     ): Promise<Car[]>;
+    updateAvailable(id: string, available: boolean): Promise<void>;
 }

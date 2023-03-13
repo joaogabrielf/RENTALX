@@ -45,8 +45,8 @@ export class CarsRepositoryInMemory implements ICarsRepository {
 
     async find(
         filterBy: ICarFilterListDTO,
-        orderBy = "name",
-        onlyAvailable = true
+        onlyAvailable = true,
+        orderBy = "name"
     ): Promise<Car[]> {
         const compareOrder = (a: Car, b: Car) => {
             if (a[orderBy] < b[orderBy]) {
@@ -75,5 +75,9 @@ export class CarsRepositoryInMemory implements ICarsRepository {
                     : true
             )
             .sort(compareOrder);
+    }
+
+    async updateAvailable(id: string, available: boolean): Promise<void> {
+        this.cars.find((car) => car.id === id).available = available;
     }
 }

@@ -49,8 +49,8 @@ export class CarsRepository implements ICarsRepository {
 
     async find(
         filterBy: ICarFilterListDTO,
-        orderBy?: string,
-        onlyAvailable = true
+        onlyAvailable = true,
+        orderBy = "name"
     ): Promise<Car[]> {
         const { id, brand, category_id, name, license_plate } = filterBy;
         const carsQuery = this.repository
@@ -82,5 +82,14 @@ export class CarsRepository implements ICarsRepository {
         const cars = await carsQuery.getMany();
 
         return cars;
+    }
+
+    async updateAvailable(id: string, available: boolean): Promise<void> {
+        await this.repository
+            .createQueryBuilder()
+            .update()
+            .set({ available })
+            .where("id = :id", { id })
+            .execute();
     }
 }
