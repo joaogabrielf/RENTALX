@@ -2,11 +2,9 @@ import { DataSourceOptions } from "typeorm";
 
 const databaseOptions: DataSourceOptions = {
     type: "postgres",
-    host:
-        process.argv.some((x) => !!x.match(/migration|seed/)) ||
-        process.env.NODE_ENV === "test"
-            ? "localhost"
-            : "database",
+    host: ["test", "dev"].includes(process.env.NODE_ENV)
+        ? "localhost"
+        : "database",
     port: 5432,
     // synchronize: process.env.NODE_ENV === "test",
     username: "docker",

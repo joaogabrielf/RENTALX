@@ -4,14 +4,14 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "typeorm": "ts-node-dev -r tsconfig-paths/register ./node_modules/typeorm/cli",
+    "typeorm": "set NODE_ENV=dev&& ts-node-dev -r tsconfig-paths/register ./node_modules/typeorm/cli",
     "dev": "ts-node-dev -r tsconfig-paths/register --poll --transpile-only --inspect --ignore-watch node_modules --respawn src/shared/infra/http/server.ts",
-    "migration:create": "cross-var yarn typeorm migration:create src/shared/infra/typeorm/migrations/%name%",
-    "migration:generate": "typeorm -d data-source -- migration:generate",
-    "migration:run": "cross-var yarn typeorm -d ./src/shared/infra/typeorm/data-source.ts migration:run",
-    "migration:revert": "cross-var yarn typeorm -d ./src/shared/infra/typeorm/data-source.ts migration:revert",
-    "test": "cross-var set NODE_ENV=test && jest --runInBand",
-    "seed:admin": "ts-node-dev ./src/shared/infra/typeorm/seed/admin",
+    "migration:create": "yarn typeorm migration:create src/shared/infra/typeorm/migrations/%name%",
+    "migration:generate": "yarn typeorm -d ./src/shared/infra/typeorm/data-source.ts migration:generate ./src/shared/infra/typeorm/migrations/generate/",
+    "migration:run": "yarn typeorm -d ./src/shared/infra/typeorm/data-source.ts migration:run",
+    "migration:revert": "yarn typeorm -d ./src/shared/infra/typeorm/data-source.ts migration:revert",
+    "test": "cross-var set NODE_ENV=test&& jest --runInBand",
+    "seed:admin": "set NODE_ENV=dev&& ts-node-dev -r tsconfig-paths/register --poll --transpile-only --inspect --ignore-watch node_modules ./src/shared/infra/typeorm/seed/admin",
     "win-script": "cross-var yarn echo $datasource datasource Hello $npm_package_name %name% typeorm datasource"
   },
   "devDependencies": {
