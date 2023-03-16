@@ -4,4 +4,8 @@ export interface IDateProvider {
     convertToUTC(date: Date): string;
     dateNow(): Date;
     addDays(days: number): Date;
+    addHoursExpiration(): Date;
+    isDateBeforeNow(date: Date): boolean;
 }
+
+export const expiresMailTime = 3;

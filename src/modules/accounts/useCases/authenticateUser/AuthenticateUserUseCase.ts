@@ -1,5 +1,5 @@
 import auth from "@config/auth";
-import { IUsersTokensRepository } from "@modules/accounts/repositories/in-memory/IUsersTokensRepository";
+import { IUsersTokensRepository } from "@modules/accounts/repositories/IUsersTokensRepository";
 import { IUsersRepository } from "@modules/accounts/repositories/IUsersRepository";
 import { compare } from "bcryptjs";
 import { sign } from "jsonwebtoken";

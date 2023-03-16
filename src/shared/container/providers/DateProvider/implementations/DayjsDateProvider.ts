@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 
-import { IDateProvider } from "../IDateProvider";
+import { expiresMailTime, IDateProvider } from "../IDateProvider";
 
 dayjs.extend(utc);
 export class DayjsDateProvider implements IDateProvider {
@@ -26,5 +26,13 @@ export class DayjsDateProvider implements IDateProvider {
 
     addDays(days: number): Date {
         return dayjs().add(days, "days").toDate();
+    }
+
+    addHoursExpiration(): Date {
+        return dayjs().add(expiresMailTime, "hours").toDate();
+    }
+
+    isDateBeforeNow(date: Date): boolean {
+        return dayjs().isAfter(dayjs(date));
     }
 }
