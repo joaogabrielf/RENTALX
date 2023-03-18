@@ -1,6 +1,6 @@
 import auth from "@config/auth";
-import { IUsersTokensRepository } from "@modules/accounts/repositories/IUsersTokensRepository";
 import { IUsersRepository } from "@modules/accounts/repositories/IUsersRepository";
+import { IUsersTokensRepository } from "@modules/accounts/repositories/IUsersTokensRepository";
 import { compare } from "bcryptjs";
 import { sign } from "jsonwebtoken";
 import { inject, injectable } from "tsyringe";
@@ -53,6 +53,8 @@ export class AuthenticateUserUseCase {
         if (!passwordMatch) {
             throw new AppError("Email or password incorrect!");
         }
+
+        await this.usersTokensRepository.deleteById(user.id);
 
         const token = sign({}, secret_token, {
             subject: user.id,

@@ -30,10 +30,6 @@ export class CreateCarUseCase {
         brand,
         category_id,
     }: IRequest): Promise<Car> {
-        // const carAlreadyExists = await this.carsRepository.findByLicensePlate(
-        //     license_plate
-        // );
-
         const carAlreadyExistsSearch = await this.carsRepository.find({
             license_plate,
         });

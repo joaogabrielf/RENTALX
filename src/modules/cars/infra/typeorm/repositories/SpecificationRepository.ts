@@ -32,9 +32,9 @@ class SpecificationRepository implements ISpecificationRepository {
         filterBy: ISpecificationFilterListDTO
     ): Promise<Specification[]> {
         const { ids, name } = filterBy;
-        const specification = await this.repository.findBy([
-            { id: In(ids ?? []), name },
-        ]);
+        const specification = await this.repository.find({
+            where: [{ id: In(ids ?? []) }, { name }],
+        });
 
         return specification;
     }
