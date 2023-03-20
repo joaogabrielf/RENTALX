@@ -2,13 +2,11 @@ import { DataSourceOptions } from "typeorm";
 
 const databaseOptions: DataSourceOptions = {
     type: "postgres",
-    host: ["test", "dev"].includes(process.env.NODE_ENV)
-        ? "localhost"
-        : "database",
+    host: "HOST_NAME",
     port: 5432,
-    username: "docker",
-    password: "ignite",
-    database: process.env.NODE_ENV === "test" ? "rentalx_test" : "rentalx",
+    username: "USERNAME",
+    password: "PASS",
+    database: "DB_NAME",
     entities: ["src/modules/*/infra/typeorm/entities/*{.ts,.js}"],
     logging: false,
     migrations: ["src/shared/infra/typeorm/migrations/*{.ts,.js}"],

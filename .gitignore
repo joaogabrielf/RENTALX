@@ -8,3 +8,4 @@ tmp/*
 coverage
 .env
 dist
+./src/shared/infra/typeorm/database.ts
