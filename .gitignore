@@ -2,7 +2,9 @@ node_modules
 .vscode
 yarn-error.log
 .VSCodeCounter
-tmp
+tmp/*
+!tmp/.gitkeep
 .editorconfig
 coverage
 .env
+dist

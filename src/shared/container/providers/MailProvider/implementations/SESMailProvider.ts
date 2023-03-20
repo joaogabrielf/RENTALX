@@ -21,7 +21,7 @@ export class SESMailProvider implements IMailProvider {
 
         const templateHTML = templateParse(variables);
 
-        const fromAddress = "Rentx <joaogabriel@pm.me>";
+        const fromAddress = "jgsantista@gmail.com";
 
         const sendEmailCommand = new SendEmailCommand({
             Destination: {
