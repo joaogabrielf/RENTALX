@@ -9,12 +9,16 @@ import swaggerUi from "swagger-ui-express";
 import { AppError } from "@shared/errors/AppError";
 
 import swaggerFile from "../../../swagger.json";
+import rateLimiter from "./middlewares/rateLimiter";
 import { router } from "./routes";
 
 import "../../container";
 
 dotenv.config();
+
 const app = express();
+
+app.use(rateLimiter);
 
 app.use(express.json());
 
