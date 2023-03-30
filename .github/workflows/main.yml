@@ -28,7 +28,7 @@ jobs:
               run: yarn build
 
             - name: Tests
-              run: yarn test
+              run: yarn test:prod
 
             - name: copy file via ssh password
               uses: appleboy/scp-action@master

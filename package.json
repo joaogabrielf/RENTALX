@@ -11,7 +11,8 @@
         "migration:generate": "yarn typeorm -d ./src/shared/infra/typeorm/data-source.ts migration:generate ./src/shared/infra/typeorm/migrations/generate/",
         "migration:run": "yarn typeorm -d ./src/shared/infra/typeorm/data-source.ts migration:run",
         "migration:revert": "yarn typeorm -d ./src/shared/infra/typeorm/data-source.ts migration:revert",
-        "test": "cross-var set NODE_ENV=test&& jest --runInBand --detectOpenHandles",
+        "test:dev": "cross-var set NODE_ENV=test&& jest src/ --runInBand --detectOpenHandles",
+        "test:prod": "cross-var set NODE_ENV=test&& jest dist/",
         "seed:admin": "set NODE_ENV=dev&& ts-node-dev -r tsconfig-paths/register --poll --transpile-only --inspect --ignore-watch node_modules ./src/shared/infra/typeorm/seed/admin",
         "win-script": "cross-var yarn echo $datasource datasource Hello $npm_package_name %name% typeorm datasource"
     },
