@@ -35,10 +35,14 @@ export class CreateCarSpecificationUseCase {
             ids: specifications_id,
         });
 
-        carExists.specifications = specifications;
+        carExists.specifications =
+            (await this.carsRepository.findAllSpecifications(carExists.id)) ??
+            [];
 
-        await this.carsRepository.create(carExists);
+        carExists.specifications.push(...specifications);
 
-        return carExists;
+        const carInserted = await this.carsRepository.create(carExists);
+
+        return carInserted;
     }
 }

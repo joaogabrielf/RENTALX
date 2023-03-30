@@ -6,6 +6,7 @@ import { Repository } from "typeorm";
 import { AppDataSource } from "@shared/infra/typeorm/data-source";
 
 import { Car } from "../entities/Car";
+import { Specification } from "../entities/Specification";
 
 export class CarsRepository implements ICarsRepository {
     private repository: Repository<Car>;
@@ -13,7 +14,6 @@ export class CarsRepository implements ICarsRepository {
     constructor() {
         this.repository = AppDataSource.getRepository(Car);
     }
-
     async create({
         brand,
         category_id,
@@ -91,5 +91,13 @@ export class CarsRepository implements ICarsRepository {
             .set({ available })
             .where("id = :id", { id })
             .execute();
+    }
+
+    async findAllSpecifications(id: string): Promise<Specification[]> {
+        const cars = await this.repository.find({
+            where: { id },
+            relations: ["specifications"],
+        });
+        return cars.shift().specifications;
     }
 }

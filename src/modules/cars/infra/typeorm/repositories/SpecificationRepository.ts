@@ -38,6 +38,10 @@ class SpecificationRepository implements ISpecificationRepository {
 
         return specification;
     }
+
+    async list(): Promise<Specification[]> {
+        return this.repository.find();
+    }
 }
 
 export { SpecificationRepository };

@@ -26,8 +26,6 @@ export class S3StorageProvider implements IStorageProvider {
 
         const ContentType = mime.getType(originalName);
 
-        console.log(ContentType);
-
         await this.s3Client.send(
             new PutObjectCommand({
                 Bucket: process.env.AWS_BUCKET,

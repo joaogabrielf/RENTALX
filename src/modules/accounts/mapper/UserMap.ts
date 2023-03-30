@@ -5,18 +5,16 @@ import { User } from "../infra/typeorm/entities/User";
 
 export class UserMap {
     static toDTO({
+        id,
         email,
         name,
-        id,
-        avatar,
         driver_license,
         avatar_url,
     }: User): IUserResponseDTO {
         const user = instanceToInstance({
+            id,
             email,
             name,
-            id,
-            avatar,
             driver_license,
             avatar_url,
         });

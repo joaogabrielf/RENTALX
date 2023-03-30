@@ -1,6 +1,7 @@
 import { ICarFilterListDTO } from "@modules/cars/dtos/ICarFilterListDTO";
 import { ICreateCarDTO } from "@modules/cars/dtos/ICreateCarDTO";
 import { Car } from "@modules/cars/infra/typeorm/entities/Car";
+import { Specification } from "@modules/cars/infra/typeorm/entities/Specification";
 import { v4 as uuidv4 } from "uuid";
 
 import { ICarsRepository } from "../ICarsRepository";
@@ -39,10 +40,6 @@ export class CarsRepositoryInMemory implements ICarsRepository {
         return car;
     }
 
-    // async findByLicensePlate(license_plate: string): Promise<Car> {
-    //     return this.cars.find((car) => car.license_plate === license_plate);
-    // }
-
     async find(
         filterBy: ICarFilterListDTO,
         onlyAvailable = true,
@@ -79,5 +76,10 @@ export class CarsRepositoryInMemory implements ICarsRepository {
 
     async updateAvailable(id: string, available: boolean): Promise<void> {
         this.cars.find((car) => car.id === id).available = available;
+    }
+
+    async findAllSpecifications(id: string): Promise<Specification[]> {
+        const carsArray = this.cars.find((car) => car.id === id);
+        return carsArray.specifications;
     }
 }

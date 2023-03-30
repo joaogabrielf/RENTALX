@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { container } from "tsyringe";
 
-import { ImportCategoryUseCase } from "./importCategoryUseCase";
+import { ImportCategoryUseCase } from "./ImportCategoryUseCase";
 
 export class ImportCategoryController {
     async handle(request: Request, response: Response): Promise<Response> {

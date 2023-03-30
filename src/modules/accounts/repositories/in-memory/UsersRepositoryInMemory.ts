@@ -1,5 +1,5 @@
-import { User } from "@modules/accounts/infra/typeorm/entities/User";
 import { ICreateUserDTO } from "@modules/accounts/dtos/ICreateUserDTO";
+import { User } from "@modules/accounts/infra/typeorm/entities/User";
 import { v4 as uuidv4 } from "uuid";
 
 import { IUsersRepository } from "../IUsersRepository";
@@ -8,6 +8,7 @@ export class UsersRepositoryInMemory implements IUsersRepository {
     users: User[] = [];
 
     async create({
+        id,
         driver_license,
         email,
         name,
@@ -16,7 +17,7 @@ export class UsersRepositoryInMemory implements IUsersRepository {
         const user = new User();
 
         Object.assign(user, {
-            id: uuidv4(),
+            id: id ?? uuidv4(),
             driver_license,
             email,
             name,

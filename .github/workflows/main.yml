@@ -4,49 +4,51 @@
 name: CI
 
 on:
-  push:
-    branches: [ master ]
-    
-  workflow_dispatch:
+    push:
+        branches: [master]
+
+    workflow_dispatch:
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    
-    steps:
-      - uses: actions/checkout@v3
-      
-      - name: Setup Nodejs
-        uses: actions/setup-node@v3
-        with:
-          node-version: 16
-          
-      - name: Install Dependencies
-        run: yarn
-        
-      - name: Build
-        run: yarn build
-        
-      - name: copy file via ssh password
-        uses: appleboy/scp-action@master
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          port: ${{ secrets.SSH_PORT }}
-          key: ${{ secrets.SSH_KEY }}
-          source: "., !node_modules"
-          target: "~/app/RENTALX"
-          
-      - name: Update API
-        uses: appleboy/ssh-action@v0.1.8
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          port: ${{ secrets.SSH_PORT }}
-          key: ${{ secrets.SSH_KEY }}
-          script: |
-            cd ~/app/RENTALX
-            yarn
-            ./node_modules/typeorm/cli -d ./dist/shared/infra/typeorm/data-source.js migration:run
-            pm2 restart all
-            
+    build:
+        runs-on: ubuntu-latest
+
+        steps:
+            - uses: actions/checkout@v3
+
+            - name: Setup Nodejs
+              uses: actions/setup-node@v3
+              with:
+                  node-version: 16
+
+            - name: Install Dependencies
+              run: yarn
+
+            - name: Build
+              run: yarn build
+
+            - name: Tests
+              run: yarn test
+
+            - name: copy file via ssh password
+              uses: appleboy/scp-action@master
+              with:
+                  host: ${{ secrets.SSH_HOST }}
+                  username: ${{ secrets.SSH_USER }}
+                  port: ${{ secrets.SSH_PORT }}
+                  key: ${{ secrets.SSH_KEY }}
+                  source: "., !node_modules"
+                  target: "~/app/RENTALX"
+
+            - name: Update API
+              uses: appleboy/ssh-action@v0.1.8
+              with:
+                  host: ${{ secrets.SSH_HOST }}
+                  username: ${{ secrets.SSH_USER }}
+                  port: ${{ secrets.SSH_PORT }}
+                  key: ${{ secrets.SSH_KEY }}
+                  script: |
+                      cd ~/app/RENTALX
+                      yarn
+                      ./node_modules/typeorm/cli -d ./dist/shared/infra/typeorm/data-source.js migration:run
+                      pm2 restart all

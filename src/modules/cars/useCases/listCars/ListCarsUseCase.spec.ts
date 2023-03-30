@@ -31,7 +31,6 @@ describe("List Cars", () => {
             category_id: "category2_id",
         });
         const cars = await listCarsUseCase.execute({});
-        // console.log(cars, [car1, car2]);
 
         expect(cars).toEqual([car1, car2]);
     });

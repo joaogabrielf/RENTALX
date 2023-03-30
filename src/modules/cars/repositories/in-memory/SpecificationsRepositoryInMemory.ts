@@ -30,11 +30,15 @@ export class SpecificationsRepositoryInMemory
     async find(
         filterBy: ISpecificationFilterListDTO
     ): Promise<Specification[]> {
-        const { ids, name } = filterBy;
+        const { ids = [], name } = filterBy;
 
         return this.specifications.filter(
             (specification) =>
                 ids.includes(specification.id) || specification.name === name
         );
+    }
+
+    async list(): Promise<Specification[]> {
+        return this.specifications;
     }
 }
