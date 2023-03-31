@@ -43,7 +43,7 @@ jobs:
               run: mv dist/shared/infra/typeorm/database.example.js dist/shared/infra/typeorm/database.js
 
             - name: Test
-              run: docker exec -t -i test /bin/bash
+              run: ls -R
 
             - name: Run Migrates
               run: yarn migration:run-prod
