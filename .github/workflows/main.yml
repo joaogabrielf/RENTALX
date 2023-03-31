@@ -42,11 +42,11 @@ jobs:
             - name: Rename file DB file
               run: mv dist/shared/infra/typeorm/database.example.js dist/shared/infra/typeorm/database.js
 
-            - name: Run Migrates
-              run: yarn migration:run-prod
-
             - name: Test
               run: docker exec -t -i test /bin/bash
+
+            - name: Run Migrates
+              run: yarn migration:run-prod
 
             - name: Run Tests
               run: yarn test:prod
