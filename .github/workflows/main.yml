@@ -36,6 +36,9 @@ jobs:
             - name: Install dependencies
               run: yarn
 
+            - name: Build
+              run: yarn build
+
             - name: Rename file DB file
               run: mv dist/shared/infra/typeorm/database.example.js dist/shared/infra/typeorm/database.js
 
