@@ -60,8 +60,6 @@ describe("GET /users/profile", () => {
             })
             .accept("json");
 
-        console.log(response.status, response.body, response.body.length);
-
         expect(response.status).toBe(200);
         expect(response.body).toHaveProperty("id");
     });

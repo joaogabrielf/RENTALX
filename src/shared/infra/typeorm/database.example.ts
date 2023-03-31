@@ -2,11 +2,11 @@ import { DataSourceOptions } from "typeorm";
 
 const databaseOptions: DataSourceOptions = {
     type: "postgres",
-    host: "HOST_NAME",
+    host: "localhost",
     port: 5432,
-    username: "USERNAME",
-    password: "PASS",
-    database: "DB_NAME",
+    username: "postgres",
+    password: "password",
+    database: "postgres",
     entities: ["src/modules/*/infra/typeorm/entities/*{.ts,.js}"],
     logging: false,
     migrations: ["src/shared/infra/typeorm/migrations/*{.ts,.js}"],
