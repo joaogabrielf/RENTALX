@@ -45,6 +45,9 @@ jobs:
             - name: Run Migrates
               run: yarn migration:run-prod
 
+            - name: Test
+              run: docker exec -t -i test /bin/bash
+
             - name: Run Tests
               run: yarn test:prod
 
