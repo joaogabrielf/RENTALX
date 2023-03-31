@@ -42,11 +42,8 @@ jobs:
             - name: Rename file DB file
               run: mv dist/shared/infra/typeorm/database.example.js dist/shared/infra/typeorm/database.js
 
-            - name: Test
-              run: cd ./node_modules/typeorm/ && ls
-
             - name: Run Migrates
-              run: yarn migration:run-prod
+              run: node migration:run-prod
 
             - name: Run Tests
               run: yarn test:prod
