@@ -10,7 +10,7 @@
         "migration:create": "yarn typeorm migration:create src/shared/infra/typeorm/migrations/%name%",
         "migration:generate": "yarn typeorm -d ./src/shared/infra/typeorm/data-source.ts migration:generate ./src/shared/infra/typeorm/migrations/generate/",
         "migration:run-dev": "yarn typeorm -d ./src/shared/infra/typeorm/data-source.ts migration:run",
-        "migration:run-prod": "yarn ./node_modules/typeorm/cli -d ./dist/shared/infra/typeorm/data-source.js migration:run",
+        "migration:run-prod": "node ./node_modules/typeorm/cli -d ./dist/shared/infra/typeorm/data-source.js migration:run",
         "migration:revert": "yarn typeorm -d ./src/shared/infra/typeorm/data-source.ts migration:revert",
         "test:dev": "cross-var set NODE_ENV=test&& jest src/ --runInBand --detectOpenHandles",
         "test:prod": "cross-var set NODE_ENV=prod&& jest dist/ --runInBand",
