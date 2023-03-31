@@ -7,9 +7,9 @@ const databaseOptions: DataSourceOptions = {
     username: "postgres",
     password: "postgres",
     database: "postgres",
-    entities: ["src/modules/*/infra/typeorm/entities/*{.ts,.js}"],
+    entities: ["dist/modules/*/infra/typeorm/entities/*{.ts,.js}"],
     logging: false,
-    migrations: ["src/shared/infra/typeorm/migrations/*{.ts,.js}"],
+    migrations: ["dist/shared/infra/typeorm/migrations/*{.ts,.js}"],
     migrationsTableName: "custom_migration_table",
 };
 export { databaseOptions };
