@@ -56,5 +56,7 @@ describe("List Cars Specifications Controller", () => {
         await dataSource.dropDatabase();
         await dataSource.destroy();
         await AppDataSource.destroy();
+        // eslint-disable-next-line no-promise-executor-return
+        await new Promise<void>((resolve) => setTimeout(() => resolve(), 500));
     });
 });

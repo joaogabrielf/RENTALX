@@ -54,13 +54,11 @@ app.use(
                 .status(err.statusCode)
                 .json({ message: err.message });
         }
-        return response
-            .status(500)
-            .json({
-                status: "error",
-                message: `Internal server error ${err.message}`,
-            })
-            .end();
+
+        return response.status(500).json({
+            status: "error",
+            message: `Internal server error ${err.message}`,
+        });
     }
 );
 
