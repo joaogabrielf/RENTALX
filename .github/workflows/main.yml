@@ -42,6 +42,9 @@ jobs:
             - name: Rename file DB file
               run: mv dist/shared/infra/typeorm/database.example.js dist/shared/infra/typeorm/database.js
 
+            - name: Rename file env file
+              run: mv .env.example .env
+
             - name: Run Migrates
               run: node ./node_modules/typeorm/cli -d ./dist/shared/infra/typeorm/data-source.js migration:run
 
