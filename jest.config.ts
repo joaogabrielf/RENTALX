@@ -12,7 +12,9 @@ export default {
     preset: "ts-jest",
     moduleDirectories: ["node_modules", "<rootDir>"],
     moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, {
-        prefix: "<rootDir>/src/",
+        prefix: `<rootDir>/${
+            process.env.NODE_ENV === "prod" ? "dist" : "src"
+        }/`,
     }),
     transform: {
         "^.+\\.(ts)$": "ts-jest",
