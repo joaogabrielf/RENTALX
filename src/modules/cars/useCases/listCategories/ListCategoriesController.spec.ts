@@ -3,6 +3,7 @@ import request from "supertest";
 import { DataSource } from "typeorm";
 
 import { app } from "@shared/infra/http/app";
+import { AppDataSource } from "@shared/infra/typeorm/data-source";
 import { databaseOptions } from "@shared/infra/typeorm/database";
 
 let dataSource: DataSource;
@@ -49,5 +50,6 @@ describe("Create Category Controller", () => {
     afterAll(async () => {
         await dataSource.dropDatabase();
         await dataSource.destroy();
+        await AppDataSource.destroy();
     });
 });
