@@ -29,6 +29,16 @@ jobs:
                 ports:
                     - 5432:5432
 
+            redis:
+                # Docker Hub image
+                image: redis
+                # Set health checks to wait until redis has started
+                options: >-
+                    --health-cmd "redis-cli ping"
+                    --health-interval 10s
+                    --health-timeout 5s
+                    --health-retries 5
+
         steps:
             - name: Check out repository code
               uses: actions/checkout@v3
@@ -53,6 +63,13 @@ jobs:
 
             - name: Run Tests
               run: yarn test:prod
+
+              env:
+                  # The hostname used to communicate with the Redis service container
+                  REDIS_HOST: redis
+                  # The default Redis port
+                  REDIS_PORT: 6379
+                  SENTRY_DSN: https://3ee5e3b240494c18b4026a2524e2c604@o4504875440209920.ingest.sentry.io/4504875449712640
 
     build:
         runs-on: ubuntu-latest
