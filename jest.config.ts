@@ -16,6 +16,7 @@ export default {
             process.env.NODE_ENV === "prod" ? "dist" : "src"
         }/`,
     }),
+    modulePaths: ["<rootDir>", "/dist/modules/"],
     transform: {
         "^.+\\.(ts)$": "ts-jest",
     },
