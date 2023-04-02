@@ -13,13 +13,31 @@ describe("GET /categories", () => {
 
         await dataSource.initialize();
         await dataSource.synchronize();
+
+        const password = await hash("admin", 8);
+        await dataSource.query(
+            `INSERT INTO USERS("name", "email", "password", "isAdmin", "driver_license")
+            SELECT 'Admin', 'admin@rentalx.com', '${password}', true, 'ASD-1243'
+            WHERE NOT EXISTS (
+            SELECT ID FROM USERS WHERE LOWER(NAME) = 'admin')`
+        );
     });
 
     it("should be able to list all categories", async () => {
-        const reqTest = await request(app).post("/categories").send({
-            name: "Category Supertest List",
-            description: "Category Supertest List",
+        const responseToken = await request(app).post("/sessions").send({
+            email: "admin@rentalx.com",
+            password: "admin",
         });
+
+        const reqTest = await request(app)
+            .post("/categories")
+            .send({
+                name: "Category Supertest List",
+                description: "Category Supertest List",
+            })
+            .set({
+                Authorization: `Bearer ${responseToken.body.token}`,
+            });
 
         console.log(reqTest.body);
 
