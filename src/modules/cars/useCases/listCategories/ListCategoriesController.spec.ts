@@ -21,9 +21,11 @@ describe("GET /categories", () => {
             description: "Category Supertest List",
         });
 
-        console.log(reqTest);
+        console.log(reqTest.body);
 
         const response = await request(app).get("/categories");
+
+        console.log(response.body, response.status);
 
         expect(response.status).toBe(200);
         expect(response.body.length).toBe(1);
