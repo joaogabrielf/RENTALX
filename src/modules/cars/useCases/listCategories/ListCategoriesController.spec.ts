@@ -23,6 +23,10 @@ describe("GET /categories", () => {
         );
     });
 
+    beforeEach(() => {
+        jest.resetAllMocks();
+    });
+
     it("should be able to list all categories", async () => {
         const responseToken = await request(app).post("/sessions").send({
             email: "admin@rentalx.com",

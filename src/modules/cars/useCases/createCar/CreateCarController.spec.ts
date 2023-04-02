@@ -23,6 +23,10 @@ describe("POST /cars", () => {
         );
     });
 
+    beforeEach(() => {
+        jest.resetAllMocks();
+    });
+
     it("should be able to create a new car", async () => {
         const responseToken = await request(app).post("/sessions").send({
             email: "admin@rentalx.com",

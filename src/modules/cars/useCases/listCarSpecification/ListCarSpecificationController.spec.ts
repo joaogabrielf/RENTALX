@@ -23,6 +23,10 @@ describe("List Cars Specifications Controller", () => {
         );
     });
 
+    beforeEach(() => {
+        jest.resetAllMocks();
+    });
+
     it("should be able to list all cars specifications", async () => {
         const responseToken = await request(app).post("/sessions").send({
             email: "admin@rentalx.com",

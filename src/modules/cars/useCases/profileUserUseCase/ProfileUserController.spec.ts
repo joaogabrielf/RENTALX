@@ -23,6 +23,10 @@ describe("GET /users/profile", () => {
         );
     });
 
+    beforeEach(() => {
+        jest.resetAllMocks();
+    });
+
     it("should be able to list user profile", async () => {
         const responseTokenAdmin = await request(app).post("/sessions").send({
             email: "admin@rentalx.com",
