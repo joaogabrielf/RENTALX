@@ -18,8 +18,6 @@ describe("List Cars Specifications Controller", () => {
             VALUES ('b2d6305b-bb06-4cb9-bac2-1a59fef73a3b', 'Uno', 'Uno novo 2017', 120.00, 'AFX-3123', 45.00, 'Fiat')`
         );
 
-        console.log(await dataSource.query("SELECT * FROM CARS"));
-
         await dataSource.query(
             `INSERT INTO SPECIFICATIONS("id", "name", "description")
             VALUES ('66b9f7e1-26ea-4867-854a-4d4a53ad8214', 'AC', 'Ar condicionado')`
@@ -56,7 +54,5 @@ describe("List Cars Specifications Controller", () => {
         await dataSource.dropDatabase();
         await dataSource.destroy();
         await AppDataSource.destroy();
-        // eslint-disable-next-line no-promise-executor-return
-        await new Promise<void>((resolve) => setTimeout(() => resolve(), 500));
     });
 });
