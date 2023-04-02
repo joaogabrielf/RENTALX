@@ -13,22 +13,43 @@ describe("GET /specifications", () => {
 
         await dataSource.initialize();
         await dataSource.synchronize();
+
+        const password = await hash("admin", 8);
+        await dataSource.query(
+            `INSERT INTO USERS("name", "email", "password", "isAdmin", "driver_license")
+            SELECT 'Admin', 'admin@rentalx.com', '${password}', true, 'ASD-1243'
+            WHERE NOT EXISTS (
+            SELECT ID FROM USERS WHERE LOWER(NAME) = 'admin')`
+        );
     });
 
     it("should be able to list all specifications", async () => {
-        await request(app).post("/specifications").send({
-            name: "TEST 1 SPECIFICATION",
-            description: "TEST 1 SPECIFICATION",
+        const responseToken = await request(app).post("/sessions").send({
+            email: "admin@rentalx.com",
+            password: "admin",
         });
 
-        await request(app).post("/specifications").send({
-            name: "TEST 2 SPECIFICATION",
-            description: "TEST 2 SPECIFICATION",
-        });
+        await request(app)
+            .post("/specifications")
+            .send({
+                name: "TEST 1 SPECIFICATION",
+                description: "TEST 1 SPECIFICATION",
+            })
+            .set({
+                Authorization: `Bearer ${responseToken.body.token}`,
+            });
+
+        await request(app)
+            .post("/specifications")
+            .send({
+                name: "TEST 2 SPECIFICATION",
+                description: "TEST 2 SPECIFICATION",
+            })
+            .set({
+                Authorization: `Bearer ${responseToken.body.token}`,
+            });
 
         const response = await request(app).get("/specifications");
-
-        console.log(response);
 
         expect(response.status).toBe(200);
         expect(response.body.length).toBe(2);

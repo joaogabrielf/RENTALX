@@ -18,13 +18,9 @@ export default {
     clearMocks: true,
 
     collectCoverage: false,
-
     // collectCoverageFrom: ["<rootDir>/src/modules/**/useCases/**/*.ts"],
-
     // coverageDirectory: "coverage",
-
     // coverageProvider: "v8",
-
     // coverageReporters: ["text-summary", "lcov"],
 
     testMatch: ["**/*.spec*{.ts,.js}"],

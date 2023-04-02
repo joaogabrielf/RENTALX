@@ -21,11 +21,6 @@ describe("POST /cars", () => {
             WHERE NOT EXISTS (
             SELECT ID FROM USERS WHERE LOWER(NAME) = 'admin')`
         );
-
-        await dataSource.query(
-            `INSERT INTO CATEGORIES("id", "name", "description")
-            VALUES ('0dd6eda1-ffad-4acb-a2b4-cfaef68abf28', 'Category Name', 'Category Description')`
-        );
     });
 
     it("should be able to create a new car", async () => {
@@ -33,6 +28,16 @@ describe("POST /cars", () => {
             email: "admin@rentalx.com",
             password: "admin",
         });
+
+        const category = await request(app)
+            .post("/categories")
+            .send({
+                name: "Category Supertest",
+                description: "Category Supertest",
+            })
+            .set({
+                Authorization: `Bearer ${responseToken.body.token}`,
+            });
 
         const response = await request(app)
             .post("/cars")
@@ -43,7 +48,7 @@ describe("POST /cars", () => {
                 license_plate: "QWE-1334",
                 fine_amount: 54,
                 brand: "Brand Car Supertest",
-                category_id: null,
+                category_id: category.body.id,
             })
             .set({
                 Authorization: `Bearer ${responseToken.body.token}`,

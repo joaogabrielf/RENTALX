@@ -39,13 +39,34 @@ describe("POST /cars/specifications/{id}", () => {
             password: "admin",
         });
 
-        const car_id = "b2d6305b-bb06-4cb9-bac2-1a59fef73a3b";
-        const specifications_id = "66b9f7e1-26ea-4867-854a-4d4a53ad8214";
+        const car = await request(app)
+            .post("/cars")
+            .send({
+                name: "Name Car Supertest",
+                description: "Desc Car Supertest",
+                daily_rate: 120,
+                license_plate: "QWE-1334",
+                fine_amount: 54,
+                brand: "Brand Car Supertest",
+                category_id: null,
+            })
+            .set({
+                Authorization: `Bearer ${responseToken.body.token}`,
+            });
+        const specification = await request(app)
+            .post("/specifications")
+            .send({
+                name: "Specification Supertest Name Create",
+                description: "Specification Supertest Description Create",
+            })
+            .set({
+                Authorization: `Bearer ${responseToken.body.token}`,
+            });
 
         const response = await request(app)
-            .post(`/cars/specifications/${car_id}`)
+            .post(`/cars/specifications/${car.body.id}`)
             .send({
-                specifications_id: [specifications_id],
+                specifications_id: [specification.body.id],
             })
             .set({
                 Authorization: `Bearer ${responseToken.body.token}`,

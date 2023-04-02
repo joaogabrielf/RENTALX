@@ -29,7 +29,7 @@ describe("GET /categories", () => {
             password: "admin",
         });
 
-        const reqTest = await request(app)
+        await request(app)
             .post("/categories")
             .send({
                 name: "Category Supertest List",
@@ -39,11 +39,7 @@ describe("GET /categories", () => {
                 Authorization: `Bearer ${responseToken.body.token}`,
             });
 
-        console.log(reqTest.body);
-
         const response = await request(app).get("/categories");
-
-        console.log(response.body, response.status);
 
         expect(response.status).toBe(200);
         expect(response.body.length).toBe(1);

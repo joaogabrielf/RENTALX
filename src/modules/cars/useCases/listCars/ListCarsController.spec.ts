@@ -1,3 +1,4 @@
+import { hash } from "bcryptjs";
 import request from "supertest";
 import { DataSource } from "typeorm";
 
@@ -13,18 +14,49 @@ describe("List Cars Controller", () => {
         await dataSource.initialize();
         await dataSource.synchronize();
 
+        const password = await hash("admin", 8);
         await dataSource.query(
-            `INSERT INTO CARS("id", "name", "description", "daily_rate", "license_plate", "fine_amount", "brand")
-            VALUES ('b2d6305b-bb06-4cb9-bac2-1a59fef73a3b', 'Uno', 'Uno novo 2017', 120.00, 'AFX-3123', 45.00, 'Fiat')`
-        );
-
-        await dataSource.query(
-            `INSERT INTO CARS("id", "name", "description", "daily_rate", "license_plate", "fine_amount", "brand")
-            VALUES ('265bfeeb-5e84-4dc6-9822-e1f62713e6fa', 'Palio', 'Palio novo 2017', 130.00, 'AFX-3333', 55.00, 'Fiat')`
+            `INSERT INTO USERS("name", "email", "password", "isAdmin", "driver_license")
+            SELECT 'Admin', 'admin@rentalx.com', '${password}', true, 'ASD-1243'
+            WHERE NOT EXISTS (
+            SELECT ID FROM USERS WHERE LOWER(NAME) = 'admin')`
         );
     });
 
     it("should be able list all cars", async () => {
+        const responseToken = await request(app).post("/sessions").send({
+            email: "admin@rentalx.com",
+            password: "admin",
+        });
+        await request(app)
+            .post("/cars")
+            .send({
+                name: "Name Car1 Supertest",
+                description: "Desc Car1 Supertest",
+                daily_rate: 120,
+                license_plate: "QWE-1334",
+                fine_amount: 54,
+                brand: "Brand Car Supertest",
+                category_id: null,
+            })
+            .set({
+                Authorization: `Bearer ${responseToken.body.token}`,
+            });
+
+        await request(app)
+            .post("/cars")
+            .send({
+                name: "Name Car2 Supertest",
+                description: "Desc Car2 Supertest",
+                daily_rate: 130,
+                license_plate: "QWE-1234",
+                fine_amount: 55,
+                brand: "Brand1 Car Supertest",
+                category_id: null,
+            })
+            .set({
+                Authorization: `Bearer ${responseToken.body.token}`,
+            });
         const response = await request(app).get("/cars/list");
 
         expect(response.status).toBe(200);
