@@ -15,16 +15,21 @@ describe("POST /cars", () => {
         await dataSource.synchronize();
 
         const password = await hash("admin", 8);
-        await dataSource.query(
+        const queryAdmin = await dataSource.query(
             `INSERT INTO USERS("name", "email", "password", "isAdmin", "driver_license")
             SELECT 'Admin', 'admin@rentalx.com', '${password}', true, 'ASD-1243'
             WHERE NOT EXISTS (
             SELECT ID FROM USERS WHERE LOWER(NAME) = 'admin')`
         );
-        await dataSource.query(
+
+        console.log("Admin", queryAdmin);
+
+        const queryCategory = await dataSource.query(
             `INSERT INTO CATEGORIES("id", "name", "description")
             VALUES ('0dd6eda1-ffad-4acb-a2b4-cfaef68abf28', 'Category Name', 'Category Description')`
         );
+
+        console.log("Category", queryCategory);
     });
 
     it("should be able to create a new car", async () => {
@@ -32,6 +37,7 @@ describe("POST /cars", () => {
             email: "admin@rentalx.com",
             password: "admin",
         });
+        console.log("TOKEN", responseToken);
 
         const response = await request(app)
             .post("/cars")
@@ -47,6 +53,8 @@ describe("POST /cars", () => {
             .set({
                 Authorization: `Bearer ${responseToken.body.token}`,
             });
+
+        console.log("Response", response);
 
         expect(response.status).toBe(201);
     });
