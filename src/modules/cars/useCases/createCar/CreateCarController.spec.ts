@@ -33,7 +33,6 @@ describe("POST /cars", () => {
             email: "admin@rentalx.com",
             password: "admin",
         });
-        console.log("TOKEN", responseToken.body);
 
         const response = await request(app)
             .post("/cars")
@@ -49,8 +48,6 @@ describe("POST /cars", () => {
             .set({
                 Authorization: `Bearer ${responseToken.body.token}`,
             });
-
-        console.log("Response", response.body);
 
         expect(response.status).toBe(201);
     });

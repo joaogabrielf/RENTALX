@@ -16,10 +16,12 @@ describe("GET /categories", () => {
     });
 
     it("should be able to list all categories", async () => {
-        await request(app).post("/categories").send({
+        const reqTest = await request(app).post("/categories").send({
             name: "Category Supertest List",
             description: "Category Supertest List",
         });
+
+        console.log(reqTest);
 
         const response = await request(app).get("/categories");
 

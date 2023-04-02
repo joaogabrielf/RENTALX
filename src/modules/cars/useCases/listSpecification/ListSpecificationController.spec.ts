@@ -28,6 +28,8 @@ describe("GET /specifications", () => {
 
         const response = await request(app).get("/specifications");
 
+        console.log(response);
+
         expect(response.status).toBe(200);
         expect(response.body.length).toBe(2);
         expect(response.body[0]).toHaveProperty("id");
