@@ -55,8 +55,8 @@ jobs:
             - name: Rename file env file
               run: mv .env.example .env
 
-            - name: Show file
-              run: cd dist/modules/cars/useCases/importCategory/ && ls
+            - name: rename Import file
+              run: mv dist/modules/cars/useCases/importCategory/importCategoryController.js dist/modules/cars/useCases/importCategory/ImportCategoryController.js && mv dist/modules/cars/useCases/importCategory/importCategoryUseCase.js dist/modules/cars/useCases/importCategory/ImportCategoryUseCase.js
 
             - name: Run Migrates
               run: node ./node_modules/typeorm/cli -d ./dist/shared/infra/typeorm/data-source.js migration:run
