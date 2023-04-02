@@ -89,6 +89,9 @@ jobs:
             - name: Build
               run: yarn build
 
+            - name: rename Import file
+              run: mv dist/modules/cars/useCases/importCategory/importCategoryController.js dist/modules/cars/useCases/importCategory/ImportCategoryController.js && mv dist/modules/cars/useCases/importCategory/importCategoryUseCase.js dist/modules/cars/useCases/importCategory/ImportCategoryUseCase.js
+
             - name: copy file via ssh password
               uses: appleboy/scp-action@master
               with:
