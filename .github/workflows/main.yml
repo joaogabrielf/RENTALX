@@ -56,7 +56,7 @@ jobs:
               run: mv .env.example .env
 
             - name: Show file
-              run: cat dist/modules/cars/useCases/importCategory/ImportCategoryController.js
+              run: cd dist/modules/cars/useCases/importCategory/ && ls
 
             - name: Run Migrates
               run: node ./node_modules/typeorm/cli -d ./dist/shared/infra/typeorm/data-source.js migration:run
