@@ -44,8 +44,6 @@ describe("List Cars Specifications Controller", () => {
                 Authorization: `Bearer ${responseToken.body.token}`,
             });
 
-        console.log("CAR", car.body);
-
         await request(app)
             .post("/specifications")
             .send({
@@ -83,8 +81,6 @@ describe("List Cars Specifications Controller", () => {
         const response = await request(app).get(
             `/cars/specifications/${car.body.id}`
         );
-
-        console.log(response.body);
 
         expect(response.status).toBe(200);
         expect(response.body.length).toBe(2);
