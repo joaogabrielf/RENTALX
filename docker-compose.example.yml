@@ -3,7 +3,7 @@ version: "3.7"
 services:
     database:
         image: postgres
-        container_name: {CONTAINER_NAME}
+        container_name: CONTAINER_NAME
         restart: always
         ports:
             - 5432:5432
@@ -23,10 +23,14 @@ services:
         volumes:
             - .:/usr/app
         # network_mode: host
-        links: 
+        links:
             - database
         depends_on:
             - database
+    redis:
+        image: redis:alpine
+        ports:
+            - 6379:6379
 
 volumes:
     pgdata:

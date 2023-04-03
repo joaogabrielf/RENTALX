@@ -34,7 +34,7 @@ export default async function rateLimiter(
 
         next();
     } catch (err) {
-        throw new AppError("Too many requests", 429);
+        throw new AppError(err, 429);
     } finally {
         await redisClient.disconnect();
     }
