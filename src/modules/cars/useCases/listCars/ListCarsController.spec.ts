@@ -33,6 +33,19 @@ describe("List Cars Controller", () => {
             password: "admin",
         });
         await request(app)
+            .post("/categories")
+            .send({
+                name: "Category Supertest",
+                description: "Category Supertest",
+            })
+            .set({
+                Authorization: `Bearer ${responseToken.body.token}`,
+            });
+
+        const categoryResponse = await request(app).get("/categories");
+        const { category_id } = categoryResponse.body[0];
+
+        await request(app)
             .post("/cars")
             .send({
                 name: "Name Car1 Supertest",
@@ -41,7 +54,7 @@ describe("List Cars Controller", () => {
                 license_plate: "QWE-1334",
                 fine_amount: 54,
                 brand: "Brand Car Supertest",
-                category_id: null,
+                category_id,
             })
             .set({
                 Authorization: `Bearer ${responseToken.body.token}`,
@@ -56,7 +69,7 @@ describe("List Cars Controller", () => {
                 license_plate: "QWE-1234",
                 fine_amount: 55,
                 brand: "Brand1 Car Supertest",
-                category_id: null,
+                category_id,
             })
             .set({
                 Authorization: `Bearer ${responseToken.body.token}`,

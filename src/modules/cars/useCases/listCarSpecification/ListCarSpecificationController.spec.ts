@@ -33,6 +33,19 @@ describe("List Cars Specifications Controller", () => {
             password: "admin",
         });
 
+        await request(app)
+            .post("/categories")
+            .send({
+                name: "Category Supertest",
+                description: "Category Supertest",
+            })
+            .set({
+                Authorization: `Bearer ${responseToken.body.token}`,
+            });
+
+        const categoryResponse = await request(app).get("/categories");
+        const { category_id } = categoryResponse.body[0];
+
         const car = await request(app)
             .post("/cars")
             .send({
@@ -42,7 +55,7 @@ describe("List Cars Specifications Controller", () => {
                 license_plate: "QWE-1334",
                 fine_amount: 54,
                 brand: "Brand Car Supertest",
-                category_id: null,
+                category_id,
             })
             .set({
                 Authorization: `Bearer ${responseToken.body.token}`,

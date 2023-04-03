@@ -21,16 +21,6 @@ describe("POST /cars/specifications/{id}", () => {
             WHERE NOT EXISTS (
             SELECT ID FROM USERS WHERE LOWER(NAME) = 'admin')`
         );
-
-        await dataSource.query(
-            `INSERT INTO CARS("id", "name", "description", "daily_rate", "license_plate", "fine_amount", "brand")
-            VALUES ('b2d6305b-bb06-4cb9-bac2-1a59fef73a3b', 'Uno', 'Uno novo 2017', 120.00, 'AFX-3123', 45.00, 'Fiat')`
-        );
-
-        await dataSource.query(
-            `INSERT INTO SPECIFICATIONS("id", "name", "description")
-            VALUES ('66b9f7e1-26ea-4867-854a-4d4a53ad8214', 'AC', 'Ar condicionado')`
-        );
     });
 
     beforeEach(() => {
@@ -43,6 +33,19 @@ describe("POST /cars/specifications/{id}", () => {
             password: "admin",
         });
 
+        await request(app)
+            .post("/categories")
+            .send({
+                name: "Category Supertest",
+                description: "Category Supertest",
+            })
+            .set({
+                Authorization: `Bearer ${responseToken.body.token}`,
+            });
+
+        const categoryResponse = await request(app).get("/categories");
+        const { category_id } = categoryResponse.body[0];
+
         const car = await request(app)
             .post("/cars")
             .send({
@@ -52,25 +55,41 @@ describe("POST /cars/specifications/{id}", () => {
                 license_plate: "QWE-1334",
                 fine_amount: 54,
                 brand: "Brand Car Supertest",
-                category_id: null,
-            })
-            .set({
-                Authorization: `Bearer ${responseToken.body.token}`,
-            });
-        const specification = await request(app)
-            .post("/specifications")
-            .send({
-                name: "Specification Supertest Name Create",
-                description: "Specification Supertest Description Create",
+                category_id,
             })
             .set({
                 Authorization: `Bearer ${responseToken.body.token}`,
             });
 
+        await request(app)
+            .post("/specifications")
+            .send({
+                name: "Specification1 Test AC",
+                description: "Specification1 Test Ar Condicionado",
+            })
+            .set({
+                Authorization: `Bearer ${responseToken.body.token}`,
+            });
+
+        await request(app)
+            .post("/specifications")
+            .send({
+                name: "Specification2 Test AC",
+                description: "Specification2 Test Ar Condicionado",
+            })
+            .set({
+                Authorization: `Bearer ${responseToken.body.token}`,
+            });
+
+        const specifications = await request(app).get("/specifications");
+
         const response = await request(app)
             .post(`/cars/specifications/${car.body.id}`)
             .send({
-                specifications_id: [specification.body.id],
+                specifications_id: [
+                    specifications.body[0].id,
+                    specifications.body[1].id,
+                ],
             })
             .set({
                 Authorization: `Bearer ${responseToken.body.token}`,

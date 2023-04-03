@@ -85,6 +85,43 @@ describe("POST /cars", () => {
         expect(response.status).toBe(400);
     });
 
+    it("should not be able to create a new car with a non existing category", async () => {
+        const responseToken = await request(app).post("/sessions").send({
+            email: "admin@rentalx.com",
+            password: "admin",
+        });
+
+        await request(app)
+            .post("/categories")
+            .send({
+                name: "Category Supertest",
+                description: "Category Supertest",
+            })
+            .set({
+                Authorization: `Bearer ${responseToken.body.token}`,
+            });
+
+        const categoryResponse = await request(app).get("/categories");
+        const { category_id } = categoryResponse.body[0];
+
+        const response = await request(app)
+            .post("/cars")
+            .send({
+                name: "Name Car Supertest",
+                description: "Desc Car Supertest",
+                daily_rate: 120,
+                license_plate: "QWE-1334",
+                fine_amount: 54,
+                brand: "Brand Car Supertest",
+                category_id,
+            })
+            .set({
+                Authorization: `Bearer ${responseToken.body.token}`,
+            });
+
+        expect(response.status).toBe(400);
+    });
+
     afterAll(async () => {
         await dataSource.dropDatabase();
         await dataSource.destroy();
