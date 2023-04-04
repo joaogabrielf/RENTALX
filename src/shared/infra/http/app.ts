@@ -17,9 +17,9 @@ import { router } from "./routes";
 import "../../container";
 
 dotenv.config();
-
 const app = express();
 
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerFile));
 app.use(rateLimiter);
 
 Sentry.init({
@@ -36,8 +36,6 @@ app.use(Sentry.Handlers.requestHandler());
 app.use(Sentry.Handlers.tracingHandler());
 
 app.use(express.json());
-
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
 app.use("/avatar", express.static(`${upload.tmpFolder}/avatar`));
 app.use("/cars", express.static(`${upload.tmpFolder}/cars`));
