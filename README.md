@@ -73,26 +73,17 @@ http://localhost:3333/api-docs
 
 ## Technologies used
 
-- Node.js
-- TypeScript
-- PostgreSQL
-- TypeORM
-- Express
-- JSON Web Token (JWT)
-- Swagger UI
-
-- [Node.js](https://nodejs.org/) v14.17.0 ![Node.js version](https://img.shields.io/badge/node-v14.17.0-brightgreen)
-- [TypeScript](https://www.typescriptlang.org/) v4.3.5 ![TypeScript version](https://img.shields.io/badge/typescript-v4.3.5-blue)
-- [Express](https://expressjs.com/) v4.17.1 ![Express version](https://img.shields.io/badge/express-v4.17.1-blue)
-- [TypeORM](https://typeorm.io/) v0.2.37 ![TypeORM version](https://img.shields.io/badge/typeorm-v0.2.37-blue)
-
-## Contributing
-
-Contributions are welcome! For more information, please refer to the [CONTRIBUTING.md](CONTRIBUTING.md) file.
+Node.js (v14.16.0)
+TypeScript (v4.3.5)
+PostgreSQL (v13.3)
+TypeORM (v0.3.11)
+Express (v4.17.1)
+JSON Web Token (JWT) (v8.5.1)
+Swagger UI (v3.52.3)
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
+This project is licensed under the MIT License
 
 
 
