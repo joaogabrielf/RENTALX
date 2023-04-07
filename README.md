@@ -73,13 +73,13 @@ http://localhost:3333/api-docs
 
 ## Technologies used
 
-Node.js (v14.16.0)
-TypeScript (v4.3.5)
-PostgreSQL (v13.3)
-TypeORM (v0.3.11)
-Express (v4.17.1)
-JSON Web Token (JWT) (v8.5.1)
-Swagger UI (v3.52.3)
+- Node.js (v14.16.0)
+- TypeScript (v4.3.5)
+- PostgreSQL (v13.3)
+- TypeORM (v0.3.11)
+- Express (v4.17.1)
+- JSON Web Token (JWT) (v8.5.1)
+- Swagger UI (v3.52.3)
 
 ## License
 
