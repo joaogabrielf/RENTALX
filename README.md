@@ -20,7 +20,7 @@ The API provides a wide range of functionalities, including registering users, a
 1. Clone the repository:
 
 ```
-git clone https://github.com/joaoxm/RENTALX.git
+git clone https://github.com/joaogabrielf/RENTALX.git
 ```
 2. Install dependencies:
 
